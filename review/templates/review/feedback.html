@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,10 +6,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>This is a feedback form</title>
+    <link rel="stylesheet" href="{% static 'review/styles.css' %}">
 </head>
 
 <body>
-    <h1>This is a feedback form</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-control {% if field.errors %}errors{% endif %}">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
 </body>
 
 </html>
